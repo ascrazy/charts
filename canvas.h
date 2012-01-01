@@ -2,8 +2,6 @@
 #define _CANVAS_H_
 
 #include <gtkmm.h>
-#include <iostream>
-#include <stdio.h>
 
 #define F(x) cos(x)+sin(x)
 #define FROM -10
