@@ -41,7 +41,7 @@ bool Canvas::on_draw(const Cairo::RefPtr<Cairo::Context>& context){
     context->set_source_rgba(color->get_red_p(), color->get_green_p(), color->get_blue_p(), 1);
     context->move_to(y(F(-10)), x(-10));
     for(float i = -10; i <= 10; i += 0.01){
-         context->line_to(y(F(i * PI)), x(i * PI));
+         context->line_to(y(F(i * M_PI)), x(i * M_PI));
     }
     context->stroke();
     context->restore();
