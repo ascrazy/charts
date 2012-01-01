@@ -6,6 +6,9 @@
 #include <stdio.h>
 
 #define F(x) cos(x)+sin(x)
+#define FROM -10
+#define TO 10
+#define STEP 0.01
 
 class Canvas : public Gtk::DrawingArea {
 public:
