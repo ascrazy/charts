@@ -3,20 +3,23 @@ CPP=/usr/bin/g++ -std=c++0x
 FLAGS=`pkg-config --cflags gtkmm-3.0`
 LIBS=`pkg-config --libs gtkmm-3.0`
 
-all: canvas application main
+all: main
 	$(CPP) main.o application.o canvas.o $(LIBS) -o main
 
-main: 
+main: application
 	$(CPP) main.cpp $(FLAGS) -c -o main.o
 
-application:
+application: function drawable coordinate_system cos canvas cartesian
 	$(CPP) application.cpp $(FLAGS) -c -o application.o
-
-canvas:
-	$(CPP) canvas.cpp $(FLAGS) -c -o canvas.o
 
 cos: function
 	$(CPP) cos.cpp -c -o cos.o
+
+canvas: drawable
+	$(CPP) canvas.cpp $(FLAGS) -c -o canvas.o
+
+cartesian: coordinate_system
+	$(CPP) cartesian.cpp -c -o cartesian.o
 
 # INTERFACES
 

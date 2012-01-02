@@ -3,21 +3,31 @@
 
 #include "cos.h"
 
-Cos::Cos(){};
+Cos::Cos(float _from = -1, float _to = 1, float _step = 0.1):
+    v_from(_from),
+    v_to(_to),
+    v_step(_step)
+{
+   
+};
 
-float Cos::from(){
+float Cos::from()
+{
     return v_from;
 };
 
-float Cos::to(){
+float Cos::to()
+{
     return v_to;
 };
 
-float Cos::step(){
+float Cos::step()
+{
     return v_step;
 };
 
-float Cos::calculate(float x){
+float Cos::calculate(float x)
+{
     return cos(x * M_PI);
 };
 

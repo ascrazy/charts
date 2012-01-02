@@ -5,9 +5,10 @@
 #include "accessors.h"
 #include "function.h"
 
-class Cos : public Function{
+class Cos : public Function
+{
 public:
-	Cos();
+    Cos(float, float, float);
 	virtual ~Cos()=0;
     virtual float from();
     virtual float to();

@@ -2,39 +2,19 @@
 #define _CANVAS_H_
 
 #include <gtkmm.h>
+#include "drawable.h"
 
-#define F(x) cos(x)+sin(x)
-#define FROM -10
-#define TO 10
-#define STEP 0.01
-
-class Canvas : public Gtk::DrawingArea {
+class Canvas : public Drawable
+{
 public:
-    Canvas(Glib::RefPtr<Gtk::Adjustment>, Glib::RefPtr<Gtk::Adjustment>, Gtk::ColorButton*);
-    virtual ~Canvas(){};
-    float get_scale_y();
-    float set_scale_y(float);
-    float get_scale_x();
-    float set_scale_x(float);
-    // Gdk::Color* get_color();
-    // Gdk::Color* set_color(Gdk::Color);
-protected:
-    virtual bool on_draw(const Cairo::RefPtr<Cairo::Context>&);
+    Canvas(Cairo::RefPtr<Cairo::Context>);
+    virtual ~Canvas()=0;
+    virtual void begin_path()=0;
+    virtual void end_path()=0;
+    virtual void line_to(float x, float y);
+    virtual void move_to(float x, float y);
 private:
-    void update();
-    void update_scale_y();
-    void update_scale_x();
-    void update_color();
-    float x(float);
-    float y(float);
-    void set_up_axis(Cairo::RefPtr<Cairo::Context>);
-    void draw_serif(Cairo::RefPtr<Cairo::Context>);
-    float scale_y;
-    float scale_x;
-    Glib::RefPtr<Gtk::Adjustment> adjustment_y;
-    Glib::RefPtr<Gtk::Adjustment> adjustment_x;
-    Gtk::ColorButton *color_button;
-    Gdk::Color *color;
+    Cairo::RefPtr<Cairo::Context> context;
 };
 
 #endif // _CANVAS_H_

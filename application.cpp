@@ -23,14 +23,22 @@ int Application::run(){
     Gtk::AspectFrame *frame = 0;
     builder->get_widget("aspectframe1", frame);
 
-    Glib::RefPtr<Gtk::Adjustment> adj_y = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(builder->get_object("adjustment1"));
-    Glib::RefPtr<Gtk::Adjustment> adj_x = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(builder->get_object("adjustment2"));
-    Gtk::ColorButton *color = 0;
-    builder->get_widget("colorbutton1", color);
+    // Glib::RefPtr<Gtk::Adjustment> adj_y = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(builder->get_object("adjustment1"));
+    // Glib::RefPtr<Gtk::Adjustment> adj_x = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(builder->get_object("adjustment2"));
+    // Gtk::ColorButton *color = 0;
+    // builder->get_widget("colorbutton1", color);
 
-    Canvas *area = new Canvas(adj_y, adj_x, color);
+    Gtk::DrawingArea *area = new Gtk::DrawingArea(adj_y, adj_x, color);
     frame->add(*area);
     area->show();
+
+    Cairo::RefPtr<Cairo::Context> context = area.get_window()->create_cairo_context();
+    Drawable *c = new Canvas(context);
+    CoordiateSystem *s = new Cartesian(c);
+    Function *f = new Cos();
+    c.add(f);
+    c.draw();
+    
 
     builder->get_widget("window1", topLevel);    
     main->run(*topLevel);

@@ -4,7 +4,8 @@
 #include "function.h"
 #include "drawable.h"
 
-class CoordinateSystem{
+class CoordinateSystem
+{
 public:
     virtual void draw()=0;
     virtual void clear()=0;
