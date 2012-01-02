@@ -15,6 +15,20 @@ application:
 canvas:
 	$(CPP) canvas.cpp $(FLAGS) -c -o canvas.o
 
+cos: function
+	$(CPP) cos.cpp -c -o cos.o
+
+# INTERFACES
+
+function:
+	$(CPP) function.h -c -o function.o
+
+drawable:
+	$(CPP) drawable.h -c -o drawable.o
+
+coordinate_system: function drawable
+	$(CPP) coordinate_system.h -c -o coordinate_system.o
+
 clean:
 	rm -f *.o
 	rm -f main
