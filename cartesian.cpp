@@ -3,43 +3,45 @@
 
 #include "cartesian.h"
 
-Cartesian::Cartesian(Drawable* _drawable) :
-    drawable(_drawable),
+Cartesian::Cartesian() :
     function(0)
 {
 
 };
 
-void Cartesian::draw()
+void Cartesian::draw_to(Drawable* drawable)
 {
-    if(function && drawable)
+    if(drawable)
     {
-        float from = function->from(), to = function->to(), step = function->step();
-        draw_axis();
-        drawable->begin_path();
-        drawable->move_to(from, function->calculate(from));
-        for(float i = from; i <= to; i += step)
+        draw_axis(drawable);
+        if(function)
         {
-            drawable->line_to(i, function->calculate(i));
+            float from = function->from(), to = function->to(), step = function->step();
+            drawable->begin_path();
+            drawable->move_to(from, function->calculate(from));
+            for(float i = from; i <= to; i += step)
+            {
+                drawable->line_to(i, function->calculate(i));
+            }
+            drawable->end_path();
         }
-        drawable->end_path();
     }
 };
 
-void Cartesian::add(Function* _function)
+void Cartesian::add_function(Function* _function)
 {
     function = _function;
 };
 
-void Cartesian::draw_axis()
+void Cartesian::draw_axis(Drawable* drawable)
 {
-    draw_x(-15, 15);
-    draw_y(-15, 15);
-    draw_x_serif(-15, 15, 1);
-    draw_y_serif(-15, 15, 1);
+    draw_x(drawable, -15, 15);
+    draw_y(drawable, -15, 15);
+    draw_x_serif(drawable, -15, 15, 1);
+    draw_y_serif(drawable, -15, 15, 1);
 };
 
-void Cartesian::draw_x(float from, float to)
+void Cartesian::draw_x(Drawable* drawable, float from, float to)
 {
     drawable->begin_path();
     drawable->move_to(from, 0);
@@ -52,7 +54,7 @@ void Cartesian::draw_x(float from, float to)
     drawable->end_path();   
 };
 
-void Cartesian::draw_y(float from, float to)
+void Cartesian::draw_y(Drawable* drawable, float from, float to)
 {
     drawable->begin_path();
     drawable->move_to(0, from);
@@ -65,7 +67,7 @@ void Cartesian::draw_y(float from, float to)
     drawable->end_path();
 };
 
-void Cartesian::draw_x_serif(float from, float to, float step)
+void Cartesian::draw_x_serif(Drawable* drawable, float from, float to, float step)
 {
     drawable->begin_path();
     for(float i = from; i <= to; i += step)
@@ -77,7 +79,7 @@ void Cartesian::draw_x_serif(float from, float to, float step)
     drawable->end_path();
 };
 
-void Cartesian::draw_y_serif(float from, float to, float step)
+void Cartesian::draw_y_serif(Drawable* drawable, float from, float to, float step)
 {
     drawable->begin_path();
     for(float i = from; i <= to; i += step)

@@ -6,17 +6,16 @@
 class Cartesian : public CoordinateSystem
 {
 public:
-	Cartesian(Drawable*);
+	Cartesian();
 	virtual ~Cartesian(){};
-    void draw();
-    void add(Function*);
+    void draw_to(Drawable*);
+    void add_function(Function*);
 private:
-    void draw_axis();
-    void draw_x(float, float);
-    void draw_y(float, float);
-    void draw_x_serif(float, float, float);
-    void draw_y_serif(float, float, float);
-    Drawable* drawable;
+    void draw_axis(Drawable*);
+    void draw_x(Drawable*, float, float);
+    void draw_y(Drawable*, float, float);
+    void draw_x_serif(Drawable*, float, float, float);
+    void draw_y_serif(Drawable*, float, float, float);
     Function* function;
 };
 

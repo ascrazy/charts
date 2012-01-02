@@ -2,6 +2,7 @@
 #define _APPLICATION_CPP_
 
 #include "application.h"
+#include "my_drawing_area.h"
 
 Application::Application(int argc, char **argv) :
     main(new Gtk::Main(argc, argv)),
@@ -22,33 +23,22 @@ Application::Application(int argc, char **argv) :
     } 
 };
 
-bool Application::draw(const Cairo::RefPtr<Cairo::Context>& cr)
-{
-    cr->scale(600, 600);
-    cr->set_line_width(0.001);
-    cr->set_source_rgba(0.999, 0.0, 0.0, 1.0);
-    Drawable *c = new Canvas(cr);
-    CoordinateSystem *s = new Cartesian(c);
-    Function *f = new Cos(-5, 5, 0.1);
-    s->add(f);
-    s->draw();
-}
-
 int Application::run()
 {
     if(!builder)
     {
         return -1;
-    }
+    }    
     
-    Gtk::DrawingArea *area = 0;
-    builder->get_widget("drawingarea1", area);
-    area->signal_draw().connect(sigc::mem_fun(*this, &Application::draw), false);
+    Glib::RefPtr<Gtk::Adjustment> adj_x = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(builder->get_object("adjustment2"));
+    MyDrawingArea *area = new MyDrawingArea(adj_x);
+
+    Gtk::AspectFrame *frame = 0;
+    builder->get_widget("aspectframe1", frame);
+    frame->add(*area);
     area->show();
 
     builder->get_widget("window1", topLevel);
-    topLevel->add(*area);
-
     main->run(*topLevel);
     return 0;
 };
