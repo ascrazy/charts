@@ -4,12 +4,12 @@ FLAGS=`pkg-config --cflags gtkmm-3.0`
 LIBS=`pkg-config --libs gtkmm-3.0`
 
 all: main
-	$(CPP) main.o application.o canvas.o $(LIBS) -o main
+	$(CPP) main.o application.o canvas.o cartesian.o cos.o $(LIBS) -o main
 
 main: application
 	$(CPP) main.cpp $(FLAGS) -c -o main.o
 
-application: function drawable coordinate_system cos canvas cartesian
+application: cos canvas cartesian
 	$(CPP) application.cpp $(FLAGS) -c -o application.o
 
 cos: function

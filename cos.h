@@ -9,11 +9,11 @@ class Cos : public Function
 {
 public:
     Cos(float, float, float);
-	virtual ~Cos()=0;
-    virtual float from();
-    virtual float to();
-    virtual float step();
-    virtual float calculate(float);
+	virtual ~Cos(){};
+    float from();
+    float to();
+    float step();
+    float calculate(float);
     ACCESSOR(float, v_from)
     ACCESSOR(float, v_to)
     ACCESSOR(float, v_step)

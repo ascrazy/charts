@@ -1,18 +1,22 @@
 #ifndef _CARTESIAN_H_
 #define _CARTESIAN_H_
 
-#include "coordinate_system"
+#include "coordinate_system.h"
 
 class Cartesian : public CoordinateSystem
 {
 public:
 	Cartesian(Drawable*);
-	virtual ~Cartesian()=0;
-    virtual void draw()=0;
-    virtual void clear()=0;
-    virtual void add(Function*)=0;
+	virtual ~Cartesian(){};
+    void draw();
+    void add(Function*);
 private:
-    Drawable* drawable
+    void draw_axis();
+    void draw_x(float, float);
+    void draw_y(float, float);
+    void draw_x_serif(float, float, float);
+    void draw_y_serif(float, float, float);
+    Drawable* drawable;
     Function* function;
 };
 

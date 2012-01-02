@@ -5,44 +5,51 @@
 
 Application::Application(int argc, char **argv) :
     main(new Gtk::Main(argc, argv)),
-    builder(Gtk::Builder::create()),
-    topLevel(0)
-    {};
-
-int Application::run(){
-    try {
+    topLevel(0),
+    builder(Gtk::Builder::create())
+{
+    try
+    {
         builder->add_from_file("resources/mainwindow.glade");
-    } catch(const Glib::FileError& ex) {
-        std::cerr << "FileError: " << ex.what() << std::endl;
-        return -1;
-    } catch(const Gtk::BuilderError& ex) {
-        std::cerr << "BuilderError: " << ex.what() << std::endl;
-        return -1;
     } 
+    catch(const Glib::FileError& ex)
+    {
+        std::cerr << "FileError: " << ex.what() << std::endl;
+    } 
+    catch(const Gtk::BuilderError& ex)
+    {
+        std::cerr << "BuilderError: " << ex.what() << std::endl;        
+    } 
+};
+
+bool Application::draw(const Cairo::RefPtr<Cairo::Context>& cr)
+{
+    cr->scale(600, 600);
+    cr->set_line_width(0.001);
+    cr->set_source_rgba(0.999, 0.0, 0.0, 1.0);
+    Drawable *c = new Canvas(cr);
+    CoordinateSystem *s = new Cartesian(c);
+    Function *f = new Cos(-5, 5, 0.1);
+    s->add(f);
+    s->draw();
+}
+
+int Application::run()
+{
+    if(!builder)
+    {
+        return -1;
+    }
     
-    Gtk::AspectFrame *frame = 0;
-    builder->get_widget("aspectframe1", frame);
-
-    // Glib::RefPtr<Gtk::Adjustment> adj_y = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(builder->get_object("adjustment1"));
-    // Glib::RefPtr<Gtk::Adjustment> adj_x = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(builder->get_object("adjustment2"));
-    // Gtk::ColorButton *color = 0;
-    // builder->get_widget("colorbutton1", color);
-
-    Gtk::DrawingArea *area = new Gtk::DrawingArea(adj_y, adj_x, color);
-    frame->add(*area);
+    Gtk::DrawingArea *area = 0;
+    builder->get_widget("drawingarea1", area);
+    area->signal_draw().connect(sigc::mem_fun(*this, &Application::draw), false);
     area->show();
 
-    Cairo::RefPtr<Cairo::Context> context = area.get_window()->create_cairo_context();
-    Drawable *c = new Canvas(context);
-    CoordiateSystem *s = new Cartesian(c);
-    Function *f = new Cos();
-    c.add(f);
-    c.draw();
-    
+    builder->get_widget("window1", topLevel);
+    topLevel->add(*area);
 
-    builder->get_widget("window1", topLevel);    
     main->run(*topLevel);
-
     return 0;
 };
 

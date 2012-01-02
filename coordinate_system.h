@@ -8,7 +8,6 @@ class CoordinateSystem
 {
 public:
     virtual void draw()=0;
-    virtual void clear()=0;
     virtual void add(Function*)=0;
 };
 
