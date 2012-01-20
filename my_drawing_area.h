@@ -8,7 +8,7 @@
 
 class MyDrawingArea : public Gtk::DrawingArea{
 public:
-    MyDrawingArea(Glib::RefPtr<Gtk::Adjustment>);
+    MyDrawingArea(Glib::RefPtr<Gtk::Adjustment>, Glib::RefPtr<Gtk::Adjustment>);
     virtual ~MyDrawingArea(){};
 protected:
     bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
@@ -18,6 +18,7 @@ private:
     CoordinateSystem* pane;
     Function* f;
     Glib::RefPtr<Gtk::Adjustment> adj_x;
+    Glib::RefPtr<Gtk::Adjustment> adj_y;
 };
 
 #endif // _MYDRAWINGAREA_H_

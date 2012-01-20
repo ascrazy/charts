@@ -4,7 +4,9 @@
 #include "cartesian.h"
 
 Cartesian::Cartesian() :
-    function(0)
+    function(0),
+    x_ratio(1),
+    y_ratio(1)
 {
 
 };
@@ -18,10 +20,10 @@ void Cartesian::draw_to(Drawable* drawable)
         {
             float from = function->from(), to = function->to(), step = function->step();
             drawable->begin_path();
-            drawable->move_to(from, function->calculate(from));
+            drawable->move_to(transfer_x(from), transfer_y(function->calculate(from)));
             for(float i = from; i <= to; i += step)
             {
-                drawable->line_to(i, function->calculate(i));
+                drawable->line_to(transfer_x(i), transfer_y(function->calculate(i)));
             }
             drawable->end_path();
         }
@@ -72,8 +74,8 @@ void Cartesian::draw_x_serif(Drawable* drawable, float from, float to, float ste
     drawable->begin_path();
     for(float i = from; i <= to; i += step)
     {
-        drawable->move_to(i, -0.1);
-        drawable->line_to(i, 0.1);
+        drawable->move_to(transfer_x(i), -0.1);
+        drawable->line_to(transfer_x(i), 0.1);
     }
     drawable->move_to(0, 0);
     drawable->end_path();
@@ -84,11 +86,36 @@ void Cartesian::draw_y_serif(Drawable* drawable, float from, float to, float ste
     drawable->begin_path();
     for(float i = from; i <= to; i += step)
     {
-        drawable->move_to(-0.1, i);
-        drawable->line_to(0.1, i);
+        drawable->move_to(-0.1, transfer_y(i));
+        drawable->line_to(0.1, transfer_y(i));
     }
     drawable->move_to(0, 0);
     drawable->end_path();
 };
+
+#include <stdio.h>
+
+void Cartesian::set_x_ratio(float _x)
+{
+    printf("x==%f\n", _x);
+    this->x_ratio = _x;
+};
+
+void Cartesian::set_y_ratio(float _y)
+{
+    printf("y==%f\n", _y);
+    this->y_ratio = _y;
+};
+
+float Cartesian::transfer_x(float _x)
+{
+    return _x * this->x_ratio;
+};
+
+float Cartesian::transfer_y(float _y)
+{
+    return _y * this->y_ratio;
+};
+
 
 #endif // _CARTESIAN_CPP_

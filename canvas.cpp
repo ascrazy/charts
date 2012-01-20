@@ -4,8 +4,7 @@
 
 #include "canvas.h"
 
-Canvas::Canvas() :
-    x_ratio(1)
+Canvas::Canvas()
 {
 
 };
@@ -54,7 +53,7 @@ void Canvas::set_context(Cairo::RefPtr<Cairo::Context> _context)
 
 float Canvas::transfer_x(float x)
 {
-    return 0.03 * x * x_ratio;
+    return 0.03 * x;
 };
 
 float Canvas::transfer_y(float y)

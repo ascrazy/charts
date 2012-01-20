@@ -15,12 +15,10 @@ public:
     void line_to(float x, float y);
     void move_to(float x, float y);
     void set_context(Cairo::RefPtr<Cairo::Context>);
-    ACCESSOR(float, x_ratio)
 private:
     Cairo::RefPtr<Cairo::Context> context;
     float transfer_x(float);
     float transfer_y(float);
-    float x_ratio;
 };
 
 #endif // _CANVAS_H_

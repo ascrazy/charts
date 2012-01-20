@@ -31,7 +31,8 @@ int Application::run()
     }    
     
     Glib::RefPtr<Gtk::Adjustment> adj_x = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(builder->get_object("adjustment2"));
-    MyDrawingArea *area = new MyDrawingArea(adj_x);
+    Glib::RefPtr<Gtk::Adjustment> adj_y = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(builder->get_object("adjustment1"));
+    MyDrawingArea *area = new MyDrawingArea(adj_x, adj_y);
 
     Gtk::AspectFrame *frame = 0;
     builder->get_widget("aspectframe1", frame);
